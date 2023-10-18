@@ -1,100 +1,15 @@
-קובץ ReadMe
-207761024
+This C project, developed as part of an Advanced Programming course, revolves around the "Rick and Morty" series. It consists of four main files:
 
-התכנית שיצרתי בנויה מ-4 קבצים:
-1.	Jerry.h – קובץ header אשר מכיל את ה-struct בהם השתמשתי בעבודה ואת חתימות הפונקציות.
-2.	Jerry.c – קובץ אשר מכיל את הפונקציות הדרושות לעבודה והפונקציות הנוספות שבניתי לתכנית.
-3.	Defs.h – קובץ header אשר מכיל שני enum בהם השתמשתי במגוון פונקציות.
-4.	ManageJerries – קובץ אשר מחולק לשניים : תהליך הקריאה מהקובץ ופונקציונליות הפקודות.
-אסביר בקצרה על המבנה של כל קובץ ואת הדברים הנוספים שהוספתי לכל קובץ להפעלת התכנית.
+Jerry.h: This header file defines the structs used in the project, along with the function signatures. It also implements compilation guards to prevent code duplication during compilation.
 
-1. Jerry.h
-בקובץ הנ"ל יצרתי struct לכל אובייקט על מנת שאוכל להשתמש בהם בהמשך. 
-בנוסף, הקובץ מכיל את ההצהרות לכל הפונקציות אשר כתבתי בקובץ Jerry.c כולל הסבר על כל פונקציה וביצעתי Compilation guard על כל הקובץ על מנת לעזור ל-compiler להימנע משכפול קוד בתהליך הקומפילציה.
+Jerry.c: In this file, you'll find various functions that facilitate the program's functionality. These functions initialize Jerry characters, planets, physical characteristics, and origins. They also check for the existence of physical characteristics, add new characteristics, delete existing ones, and print the details of Jerry characters and planets.
 
-2. Jerry.c
-בקובץ זה יצרתי את הפונקציונליות שהמודול של ג'רי צריך לתמוך בהן לפי הדרישה:
-Jerry* initJerry(char *id, int bliss_level,Planet *planet, char *dimension);
-//function that initial new jerry with all his characteristics and return jerry
-Planet* initPlanet(double x,double y,double z, char *name);
-//function that initial new planet with all his characteristics and return planet
-PC* initPC (char *name, double value);
-//function that initial new physical characteristic with all his characteristics and return physical characteristic
-Origin* initOrigin (Planet *planet, char *dimension);
-//function that initial new origin with all his characteristics and return origin
-ארבע הפונקציות הללו הן הפונקציות שיוצרות את האובייקטים שהוגדרו כ-struct בקובץ ה-header והן דומות אחת לשנייה במבנה:
-•	תחילה, יצרתי את האובייקט כאובייקט של ה-struct ומצביע והקצתי לו זיכרון ע"י malloc.
-•	ביצעתי בדיקות שפיות על ערכי האובייקט.
-•	אתחלתי כל קלט של הפונקציה שמהווה חלק מהאובייקט. לכל קלט ששלחתי לפונקציה כמצביע הקצתי זיכרון והשתמשתי ב-strcmp על מנת להעתיק את הערך (תקף לכל פונקציה בעבודה).
-•	לבסוף, החזרתי את האובייקט שאתחלתי בפונקציה.
+Defs.h: This header file contains two enums used in various functions throughout the program.
 
-bool isPCexist (Jerry *jerry, char *PCname);
-//bool function that check if physical characteristic found in given jerry by the name of the physical characteristic
-void  addPC (Jerry *jerry, PC *pc);
-// function that add new physical characteristic to a given jerry
-status deletePC (Jerry *jerry, char *characterist);
-// status function that delete physical characteristic of a given name by name of the physical characteristic
-void printJerry (Jerry *jerry);
-// function that print jerry by structure include his name, happiness level, origin, planet and his physical characteristics
-status printPlanet (Planet *planet);
-// status function that print planet with his name and coordinates, return if the print was succeed 
+ManageJerries: This file is split into two parts: one for reading data from a configuration file and the other for managing the functionalities that allow Morty to oversee all the Jerrys he has collected during his adventures.
 
+The section for reading from the file begins by extracting the number of planets and Jerrys from the configuration file and initializing the necessary variables. It then parses the file content and separates values using delimiters like colons, commas, and tabs. It converts strings to doubles and sets up a menu system to interact with the user.
 
-בנוסף, יצרתי פונקציות נוספות שהיו נחוצות להפעלת הפונקציונליות על הפקודות, אפרט על כל פונקציה:
-void print_all_Jerries(int number, Jerry **jerries);
-פונקציה שמקבלת רשימה של jerries ואת כמות ה-jerries ברשימה. תחילה, ביצעתי בדיקת שפיות על הרשימה. לאחר מכן, הפונקציה רצה בלולאה על רשימת ה-jerries ומשתמשת בפונקציה printJerry על מנת להדפיס את כל ה-jerries הקיימים ברשימה.
+The menu options include printing all Jerrys, printing all planets, adding a new characteristic to a Jerry, deleting a characteristic, printing a Jerry by choosing a planet, and printing a Jerry by selecting a characteristic. Finally, option 7 cleans up and exits the program.
 
-void print_all_Planets(int number, Planet **planets);
-פונקציה שמקבלת רשימה של jerries ואת כמות ה-jerries ברשימה. תחילה, ביצעתי בדיקת שפיות על הרשימה. לאחר מכן, הפונקציה רצה בלולאה על רשימת ה-jerries ומשתמשת בפונקציה printJerry על מנת להדפיס את כל ה-jerries הקיימים ברשימה.
-void free_Jerry(Jerry *jerry);
-פונקציה שמקבלת ג'רי וצריכה לשחרר את כל איברי הג'רי מהזיכרון. עברתי על כל תכונה בג'רי שלה הקצתי זיכרון ושחררתי אותה מהזיכרון על מנת למנוע דליפות זיכרון.
-
-void free_all_Jerries(Jerry **jerry, int numberofJerries);
-פונקציה שמקבלת מצביע למצביע של האובייקט ג'רי המהווה רשימה של jerries ואת כמות ה-jerries ברשימה. הפונקציה משתמשת בפונקציה free_jerry על מנת לשחרר את כל האיברים ברשימה ולבסוף משחררת את הג'רי עצמו מהזיכרון.
-לאחר שכל איברי הרשימה שוחררו, משחררים מהזיכרון גם את הרשימה עצמה.
-void free_planet(Planet *planet);
-פונקציה שמקבלת כוכב לכת וצריכה לשחרר את כל איברי כוכב הלכת מהזיכרון. עברתי על כל תכונה בכוכב לכת שלה הקצתי זיכרון ושחררתי אותה מהזיכרון על מנת למנוע דליפות זיכרון.
-
-void free_all_Planets(Planet **planet, int numberofPlanets);
-פונקציה שמקבלת מצביע למצביע של האובייקט כוכב לכת המהווה רשימה של planets ואת כמות ה-planets ברשימה. הפונקציה משתמשת בפונקציה free_planets על מנת לשחרר את כל האיברים ברשימה ולבסוף משחררת את כוכב הלכת עצמו מהזיכרון.
-לאחר שכל איברי הרשימה שוחררו, משחררים מהזיכרון גם את הרשימה עצמה.
-- בארבע הפונקציות האחרונות השתמשתי במקרה 7 בו נדרש לשחרר את כל ה-jerries הקיימים בזיכרו
-
-
-
-3. ManageJerries
-הקובץ הנ"ל מחולק לשני חלקים: חלק הקריאה מהקובץ, והחלק המהווה את הפונקציונאליות בה ניתן לעזור למורטי לנהל את כל הג'רים שהם הצליחו לאסוף על מנת לאפשר החזרה בטוחה של כל אחד מהם לביתו המתאים.
-חלק הקריאה מהקובץ
-תחילה, חילקתי את הקריאה לשלושה משתנים, אשר כל אחד מהם מייצג חלק אחר בקובץ:
-NumberofPlanets – האיבר הראשון בניתוב המהווה את מספר כוכבי הלכת בקובץ.
-NumberofJerries – האיבר השני בניתוב המהווה את מספר הג'רים בקובץ.
-(מספר כוכבי הלכת ומספר הג'רים מגיעים בקובץ כ-string, לכן עשיתי המרה ל-int באמצעות הפונקציה atoi)
-File *newfile – האיבר השלישי בניתוב המהווה מצביע לקובץ קונפיגורציה עצמו.
-
-לאחר מכן, יצרתי רשימות של כוכבי לכת וג'רים ובדקתי על כל אחת מהרשימות בדיקות שפיות.
-בהמשך, עברתי לתכנית אשר מעבירה את התוכן בקובץ אל התוכנית, השתמשתי בפונקציה strtok ומספר delim שונים על מנת להפריד סימנים במחרוזות בקובץ, כגון: נקודותיים, פסיק, \t (על מנת להתייחס לחלקים בהם השורה מתחילה ברווח (כאשר מוצגת רשימת התכונות של ג'רי ועוד). בחלק מההפרדות היה צורך להמיר את ה-string ל-double (מימדי הכוכב) ועל מנת לעשות זאת השתמשתי בפונקציה atoi.
-לאחר שהצלחתי להפריד הכול ולהעביר את התוכן מהקובץ לתכנית ניגשתי לבנות את התפריט שיוצג לריק בכל פעם שירצה לעשות פעולה הקשורה לניהול הג'רים. בתפריט השתמשתי ב-switch case על מנת לאפשר בחירה בין כמה אפשרויות.
-אכתוב בקצרה את דרכי הפעולה שעשיתי בכל case:
-1 – השתמשתי בפונקציה שבניתי ב-Jerry.c בשם Print_all_Jerries אשר מדפיסה את כל הג'רים הקיימים.
-2 - השתמשתי בפונקציה שבניתי ב-Jerry.c בשם Print_all_Planets אשר מדפיסה את כל כוכבי הלכת הקיימים.
-3 – תיאור הפעולות להוספת תכונה:
-•	מעבר על הרשימה ובדיקה האם הג'רי אליו אנחנו רוצים להוסיף תכונה קיים ע"י השוואת ה-input מהמשתמש ל-id של הג'רי ע"י strcmp. במידה ולא, תוחזר שגיאה ויודפס התפריט.
-•	במידה והג'רי נמצא, לבדוק אם התכונה שהמשתמש רוצה להוסיף כבר קיימת ברשימת התכונות של הג'רי הנוכחי ע"י הפונקציה isPCexist. במידה וקיימת, תוחזר שגיאה בה שם התכונה יחזור בהודעת השגיאה באותיות גדולות כנדרש ע"י פעולה שביצעתי לעבור על כל אות במחרוזת המילה והפיכתה לאות גדולה ע"י פונקציית toupper(). לבסוף, יודפס התפריט.
-•	במידה והתכונה לא קיימת, ביקשתי מהמשתמש את הערך של התכונה ב-double type.
-•	יצרתי תכונה חדשה ע"י הפונקציה initPC כולל הקצאת זיכרון לתכונה החדשה.
-•	הוספתי את התכונה לרשימת התכונות של הג'רי הנוכחי ע"י הפונקציה addPC והדפסתי את הג'רי כולל התכונה החדשה.
-4 – תיאור הפעולות למחיקת תכונה:
-•	מעבר על הרשימה ובדיקה האם הג'רי ממנו אנחנו רוצים להסיר תכונה קיים ע"י השוואת ה-input מהמשתמש ל-id של הג'רי ע"י strcmp. במידה ולא, תוחזר שגיאה ויודפס התפריט.
-•	במידה והג'רי נמצא, לבדוק אם התכונה שהמשתמש רוצה להוסיף קיימת ברשימת התכונות של הג'רי הנוכחי ע"י הפונקציה isPCexist. במידה והתכונה לא קיימת, תוחזר שגיאה בה שם התכונה יחזור בהודעת השגיאה באותיות גדולות כנדרש ע"י פעולה שביצעתי לעבור על כל אות במחרוזת המילה והפיכתה לאות גדולה ע"י פונקציית toupper(). לבסוף, יודפס התפריט.
-•	במידה והתכונה קיימת, אסיר את התכונה ע"י הפונקציה deletePC כאשר בה אני גם משחרר את הזיכרון של שם התכונה ושל התכונה עצמה מהזיכרון ואדפיס את הג'רי ללא התכונה שהוסרה.
-5 – תיאור הפעולות להדפסת ג'רי ע"י בחירת כוכב לכת:
-•	לאחר שהמשתמש הזין את שם התכונה, עברתי על רשימת כוכבי הלכת ובדקתי אם יש כוכב לכת ששמו זהה לשם שהוזן בקלט ע"י strcmp. במידה ולא, תוחזר שגיאה באותיות גדולות ויודפס התפריט.
-•	לאחר מכן, עברתי על רשימת הג'רים ובדקתי אם יש ג'רי ששם הכוכב אליו הוא שייך זהה לכוכב שהוזן בקלט ע"י strcmp. במידה ולא, תוחזר שגיאה באותיות גדולות ויודפס התפריט. במידה וכן, יודפס הג'רי הנ"ל וכן הלאה למציאת כל הג'רים מאותו הכוכב.
-6 – תיאור הפעולות להדפסת ג'רי ע"י בחירת תכונה: 
-•	לאחר שהמשתמש הזין את שם התכונה, עברתי על רשימת כוכבי הלכת ובדקתי אם יש כוכב לכת ששמו זהה לשם שהוזן בקלט ע"י strcmp. במידה ולא, תוחזר שגיאה באותיות גדולות ויודפס התפריט.
-•	לאחר מכן, עברתי על רשימת הג'רים ובתוכה עברתי על רשימת התכונות של אותו ג'רי (לולאת for כפולה) ובדקתי אם יש ג'רי ברשימת הג'רים שיש לו ברשימת התכונות תכונה זהה למה שהוזן בקלט ע"י strcmp. במידה ולא, תוחזר שגיאה באותיות גדולות ויודפס התפריט. במידה וכן, יודפס הג'רי הנ"ל וכן הלאה למציאת כל הג'רים שיש להם את אותה התכונה.
-7 – כאשר ריק לחץ '7' מטרתו לסיים עם המערכת ולנקות את התוכנית. לכן, ניקיתי את כל הג'רים וכוכבי הלכת מהתוכנית. לכל אחד מהם, השתמשתי בפונקציה שיצרתי ב-Jerry.c שעוברת על כל איברי האובייקט אליהם הוקצה זיכרון, משחררת את האיבר מהזיכרון ומאתחלת אותו ל-NULL.
-- במידה וריק הזין כל קלט אחר שהוא לא 1-7 (הוגדר תחת default) תוחזר הודעת שגיאה ויודפס התפריט.
-
-
- 
+This project is well-organized and implements various features, including dynamic memory allocation and data manipulation. It offers Morty the tools he needs to manage his collection of Jerrys.
